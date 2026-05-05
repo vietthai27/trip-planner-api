@@ -29,6 +29,11 @@ public class TripStageController {
         return ApiResponse.success("Trip stages retrieved successfully", tripStageService.findAll());
     }
 
+    @GetMapping("/trips/{tripId}")
+    public ApiResponse<List<TripStage>> findAllByTripId(@PathVariable Long tripId) {
+        return ApiResponse.success("Trip stages retrieved successfully", tripStageService.findAllByTripId(tripId));
+    }
+
     @GetMapping("/{id}")
     public ApiResponse<TripStage> findById(@PathVariable Long id) {
         return ApiResponse.success("Trip stage retrieved successfully", tripStageService.findById(id));

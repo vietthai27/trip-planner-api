@@ -26,6 +26,14 @@ public class TripSpendingService {
         return tripSpendingRepository.findAll();
     }
 
+    public List<TripSpending> findAllByTripStageId(Long tripStageId) {
+        return tripSpendingRepository.findByTripStage_Id(tripStageId);
+    }
+
+    public List<TripSpending> findAllByTripIdWithoutStage(Long tripId) {
+        return tripSpendingRepository.findByTripIdAndTripStageIsNull(tripId);
+    }
+
     public TripSpending findById(Long id) {
         return tripSpendingRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Trip spending not found: " + id));
@@ -33,6 +41,13 @@ public class TripSpendingService {
 
     public TripSpending create(TripSpendingRequest request) {
         return tripSpendingRepository.save(tripSpendingMapper.toEntity(request));
+    }
+
+    public TripSpending create(TripSpendingRequest request, Long currentUserId) {
+        if (request.getUserId() == null) {
+            request.setUserId(currentUserId);
+        }
+        return create(request);
     }
 
     public TripSpending update(Long id, TripSpendingRequest request) {

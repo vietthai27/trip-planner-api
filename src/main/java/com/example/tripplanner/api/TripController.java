@@ -4,8 +4,10 @@ import com.example.tripplanner.common.ApiResponse;
 import com.example.tripplanner.trip.Trip;
 import com.example.tripplanner.trip.TripRequest;
 import com.example.tripplanner.trip.TripService;
+import com.example.tripplanner.user.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,16 @@ public class TripController {
     @GetMapping
     public ApiResponse<List<Trip>> findAll() {
         return ApiResponse.success("Trips retrieved successfully", tripService.findAll());
+    }
+
+    @GetMapping("/me")
+    public ApiResponse<List<Trip>> findAllByLoggedInUser(@AuthenticationPrincipal User user) {
+        return ApiResponse.success("Trips retrieved successfully", tripService.findAllByUserId(user.getId()));
+    }
+
+    @GetMapping("/{tripId}/users")
+    public ApiResponse<List<User>> findUsersByTripId(@PathVariable Long tripId) {
+        return ApiResponse.success("Trip users retrieved successfully", tripService.findUsersByTripId(tripId));
     }
 
     @GetMapping("/{id}")

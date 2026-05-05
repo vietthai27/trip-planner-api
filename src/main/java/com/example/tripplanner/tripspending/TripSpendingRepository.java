@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface TripSpendingRepository extends JpaRepository<TripSpending, Long> {
     List<TripSpending> findByTripId(Long tripId);
+    List<TripSpending> findByTripStage_Id(Long tripStageId);
+    List<TripSpending> findByTripIdAndTripStageIsNull(Long tripId);
 }

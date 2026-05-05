@@ -1,10 +1,12 @@
 package com.example.tripplanner.trip;
 
+import com.example.tripplanner.user.User;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -18,9 +20,20 @@ public class TripService {
         return tripRepository.findAll();
     }
 
+    public List<Trip> findAllByUserId(Long userId) {
+        return tripRepository.findDistinctByUsers_Id(userId);
+    }
+
     public Trip findById(Long id) {
         return tripRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Trip not found: " + id));
+    }
+
+    @Transactional(readOnly = true)
+    public List<User> findUsersByTripId(Long tripId) {
+        return findById(tripId).getUsers().stream()
+                .sorted(Comparator.comparing(User::getUsername, Comparator.nullsLast(String::compareToIgnoreCase)))
+                .toList();
     }
 
     @Transactional

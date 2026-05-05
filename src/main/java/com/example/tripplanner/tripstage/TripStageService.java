@@ -17,6 +17,10 @@ public class TripStageService {
         return tripStageRepository.findAll();
     }
 
+    public List<TripStage> findAllByTripId(Long tripId) {
+        return tripStageRepository.findByTrip_Id(tripId);
+    }
+
     public TripStage findById(Long id) {
         return tripStageRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Trip stage not found: " + id));
