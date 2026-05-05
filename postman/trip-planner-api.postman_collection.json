@@ -1,0 +1,821 @@
+{
+  "info": {
+    "_postman_id": "a377b1df-3e26-48c6-9a1d-tripplanner",
+    "name": "Trip Planner API",
+    "description": "Postman collection generated from the Trip Planner Spring Boot controllers. Requests are split by API feature folders.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": []
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": []
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "tripId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "tripStageId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "tripSpendingId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "vehicleId",
+      "value": "1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"thai\",\n  \"password\": \"123456\",\n  \"role\": \"USER\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();",
+                  "const token = json?.data?.token || json?.token;",
+                  "if (token) pm.collectionVariables.set('token', token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"thai\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();",
+                  "const token = json?.data?.token || json?.token;",
+                  "if (token) pm.collectionVariables.set('token', token);"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "en"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/user/profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "profile"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/dashboard",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "dashboard"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "users"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get User By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "{{userId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"new-user\",\n  \"password\": \"123456\",\n  \"role\": \"USER\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "users"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"updated-user\",\n  \"password\": \"123456\",\n  \"role\": \"MODDER\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "{{userId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "{{userId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Modder",
+      "item": [
+        {
+          "name": "Review",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/modder/review",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "modder",
+                "review"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Vehicles",
+      "item": [
+        {
+          "name": "List Vehicles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/vehicles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "vehicles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Vehicle By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/vehicles/{{vehicleId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "vehicles",
+                "{{vehicleId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Vehicle",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Car\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/vehicles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "vehicles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Vehicle",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Motorbike\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/vehicles/{{vehicleId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "vehicles",
+                "{{vehicleId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Vehicle",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/vehicles/{{vehicleId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "vehicles",
+                "{{vehicleId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Trips",
+      "item": [
+        {
+          "name": "List Trips",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/trips",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trips"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Trip By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/trips/{{tripId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trips",
+                "{{tripId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Trip",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Da Nang Trip\",\n  \"status\": \"PLANNING\",\n  \"budget\": 5000000,\n  \"startLocation\": \"Ho Chi Minh City\",\n  \"endLocation\": \"Da Nang\",\n  \"startTime\": \"2026-06-01T08:00:00\",\n  \"distance\": 850,\n  \"userIds\": [\n    {{userId}}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/trips",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trips"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Trip",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated Da Nang Trip\",\n  \"status\": \"CONFIRMED\",\n  \"budget\": 6000000,\n  \"startLocation\": \"Ho Chi Minh City\",\n  \"endLocation\": \"Da Nang\",\n  \"startTime\": \"2026-06-01T08:00:00\",\n  \"distance\": 850,\n  \"userIds\": [\n    {{userId}}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/trips/{{tripId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trips",
+                "{{tripId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Trip",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/trips/{{tripId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trips",
+                "{{tripId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Trip Stages",
+      "item": [
+        {
+          "name": "List Trip Stages",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/trip-stages",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trip-stages"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Trip Stage By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/trip-stages/{{tripStageId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trip-stages",
+                "{{tripStageId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Trip Stage",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"First stop\",\n  \"startTime\": \"2026-06-01T08:00:00\",\n  \"endTime\": \"2026-06-01T12:00:00\",\n  \"location\": \"Nha Trang\",\n  \"activity\": \"Lunch and sightseeing\",\n  \"tripId\": {{tripId}}\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/trip-stages",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trip-stages"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Trip Stage",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated first stop\",\n  \"startTime\": \"2026-06-01T08:00:00\",\n  \"endTime\": \"2026-06-01T13:00:00\",\n  \"location\": \"Nha Trang\",\n  \"activity\": \"Lunch\",\n  \"tripId\": {{tripId}}\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/trip-stages/{{tripStageId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trip-stages",
+                "{{tripStageId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Trip Stage",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/trip-stages/{{tripStageId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trip-stages",
+                "{{tripStageId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Trip Spendings",
+      "item": [
+        {
+          "name": "List Trip Spendings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/trip-spendings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trip-spendings"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Trip Spending By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/trip-spendings/{{tripSpendingId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trip-spendings",
+                "{{tripSpendingId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Trip Spending Summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/trip-spendings/trips/{{tripId}}/summary",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trip-spendings",
+                "trips",
+                "{{tripId}}",
+                "summary"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Trip Spending",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Fuel\",\n  \"amount\": 500000,\n  \"userId\": {{userId}},\n  \"tripId\": {{tripId}},\n  \"tripStageId\": {{tripStageId}},\n  \"tripSpendingType\": \"VEHICLE\",\n  \"includedUserIds\": [\n    {{userId}}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/trip-spendings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trip-spendings"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Trip Spending",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated fuel\",\n  \"amount\": 600000,\n  \"userId\": {{userId}},\n  \"tripId\": {{tripId}},\n  \"tripStageId\": {{tripStageId}},\n  \"tripSpendingType\": \"VEHICLE\",\n  \"includedUserIds\": [\n    {{userId}}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/trip-spendings/{{tripSpendingId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trip-spendings",
+                "{{tripSpendingId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Trip Spending",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/trip-spendings/{{tripSpendingId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trip-spendings",
+                "{{tripSpendingId}}"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
