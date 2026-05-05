@@ -1,6 +1,8 @@
 package com.example.tripplanner.user;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,6 +18,15 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties({
+        "hibernateLazyInitializer",
+        "handler",
+        "authorities",
+        "accountNonExpired",
+        "accountNonLocked",
+        "credentialsNonExpired",
+        "enabled"
+})
 @Getter
 @Setter
 @Builder
@@ -31,6 +42,7 @@ public class User implements UserDetails {
     private String username;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     @Enumerated(EnumType.STRING)
