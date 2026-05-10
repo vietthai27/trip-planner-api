@@ -4,7 +4,9 @@ import com.example.tripplanner.common.ApiResponse;
 import com.example.tripplanner.trip.Trip;
 import com.example.tripplanner.trip.TripRequest;
 import com.example.tripplanner.trip.TripService;
+import com.example.tripplanner.trip.TripStatus;
 import com.example.tripplanner.user.User;
+import com.example.tripplanner.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -25,6 +28,7 @@ import java.util.List;
 public class TripController {
 
     private final TripService tripService;
+    private final UserService userService;
 
     @GetMapping
     public ApiResponse<List<Trip>> findAll() {
@@ -39,6 +43,16 @@ public class TripController {
     @GetMapping("/{tripId}/users")
     public ApiResponse<List<User>> findUsersByTripId(@PathVariable Long tripId) {
         return ApiResponse.success("Trip users retrieved successfully", tripService.findUsersByTripId(tripId));
+    }
+
+    @GetMapping("/statuses")
+    public ApiResponse<List<TripStatus>> findAllStatuses() {
+        return ApiResponse.success("Trip statuses retrieved successfully", Arrays.asList(TripStatus.values()));
+    }
+
+    @GetMapping("/users")
+    public ApiResponse<List<User>> findAllUsersForTripSelect() {
+        return ApiResponse.success("Users retrieved successfully", userService.findAll());
     }
 
     @GetMapping("/{id}")
